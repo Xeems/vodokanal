@@ -1,10 +1,21 @@
 import ErorList from '@/components/ErrorList'
 import MeterTable from '@/components/MeterTable'
-import UIbutton from '@/components/UIbutton'
-import DropFiles from '@/components/dropfiles'
+import { Document_data, Error_row, Excel_document, Meter_readings } from '@/utils/globalTypes'
 import Image from 'next/image'
+import { useRouter, useSearchParams } from 'next/navigation'
 
-export default function Home() {
+export default function Result({ searchParams }: {
+    searchParams: {
+        data: Document_data
+    }
+}) {
+
+    const document: Excel_document = searchParams.data.document
+    const meter_readings: Meter_readings[] = searchParams.data.meter_readings
+    const erros: Error_row[] = searchParams.data.errors
+
+    console.log(document)
+
     return (
         <main className="relative flex min-h-screen flex-col items-center justify-center p-24">
 

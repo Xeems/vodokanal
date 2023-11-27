@@ -3,13 +3,24 @@
 import Image from 'next/image'
 import UIbutton from './UIbutton'
 import { useState } from 'react'
+import axios from 'axios'
+import { useRouter } from 'next/navigation'
+import { Document_data, Excel_document } from '@/utils/globalTypes'
 
-export default function DropFiles() {
+interface ChildProps {
+    onDataReceived: (data: Document_data) => void
+}
+
+export default function DropFiles({ onDataReceived }: ChildProps) {
     const [selectedFile, setSelectedFile] = useState<File | null>(null)
-    const [uploaded, setUploaded] = useState()
+    const [data, setData] = useState<Document_data | null>(null)
+
+    const sendDataToPranet = (data: Document_data) => {
+        onDataReceived(data)
+    }
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        console.log(event.target.files) 
+        console.log(event.target.files)
         const files = event.target.files;
         if (files && files.length > 0) {
             setSelectedFile(files[0]);
@@ -20,6 +31,20 @@ export default function DropFiles() {
         if (!selectedFile) {
             alert("Select a file")
             return
+        }
+
+        const formData = new FormData();
+        formData.append('file', selectedFile);
+
+        const response = await axios.post('http://localhost:3000/file-upload/exel', formData,
+            {
+                headers: {
+                    'Content-Type': selectedFile.type,
+                }
+            })
+        if (response) {
+            const data: Document_data = response.data
+            sendDataToPranet(data)
         }
     }
 
@@ -40,7 +65,7 @@ export default function DropFiles() {
                             sizes="100vw"
                             style={{ width: 'auto', height: '70px' }}
                         />
-                        <p className='absolute self-end mb-10 font-medium'>Для загрузки файлов перетащите их сюда.</p>
+                        <p className='absolute self-end mb-10 font-medium'>Для загрузки файлов перетащите их сюда или нажмите.</p>
                         <input className='opacity-0 w-[100%] z-50'
                             id="dropzone-file"
                             type="file"

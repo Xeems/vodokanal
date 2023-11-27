@@ -5,12 +5,15 @@ import UIbutton from './UIbutton'
 import { useState } from 'react'
 
 export default function DropFiles() {
-    const [selectedFile, setSelectedFile] = useState(null)
+    const [selectedFile, setSelectedFile] = useState<File | null>(null)
     const [uploaded, setUploaded] = useState()
 
-    const handleChange = (event: any) => {
-        console.log(event.target.files)
-        setSelectedFile(event.target.files[0])
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        console.log(event.target.files) 
+        const files = event.target.files;
+        if (files && files.length > 0) {
+            setSelectedFile(files[0]);
+        }
     }
 
     const handleUpload = async () => {
@@ -45,8 +48,19 @@ export default function DropFiles() {
                             accept=".xlsx" />
                     </div>
                     :
-                    <div className='w-full h-48 my-5 rounded-lg border border-solid border-stone-500 bg-white opacity-70 backdrop-filter backdrop-blur-lg'>
-                        
+                    <div className='flex align-middle justify-center w-full h-48 my-5 rounded-lg border border-solid border-stone-500 bg-white bg-opacity-50 backdrop-filter backdrop-blur-lg'>
+                        <div className='flex flex-col h-fit self-center content-center'>
+                            <Image className='self-center'
+                                src="/exel.png"
+                                quality={100}
+                                alt=""
+                                width={0}
+                                height={0}
+                                sizes="100vw"
+                                style={{ width: 'auto', height: '100px' }}
+                            />
+                            <p className='text-center font-medium'>{selectedFile.name}</p>
+                        </div>
                     </div>
                 }
 

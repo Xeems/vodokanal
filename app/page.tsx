@@ -18,12 +18,6 @@ export default function Home() {
   return (
     <main className="relative flex min-h-screen flex-col items-center justify-center p-24">
 
-      <Image className='absolute z-0'
-        src="/BackGroundWater.jpg"
-        alt="Vercel Logo"
-        fill
-        priority
-      />
       <DropFiles onDataReceived={handleData} />
 
       {data ?

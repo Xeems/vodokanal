@@ -90,7 +90,7 @@ export default function DropFiles({ onDataReceived }: ChildProps) {
                 }
 
                 <div className='flex flex-row-reverse'>
-                    <UIbutton onClick={handleUpload} />
+                    <UIbutton onClick={handleUpload} >Отправка</UIbutton>
                 </div>
             </div>
         </div>

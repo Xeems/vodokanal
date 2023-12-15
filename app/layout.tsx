@@ -1,7 +1,11 @@
+
+
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import Image from 'next/image'
+import { SessionProvider } from 'next-auth/react'
+import Provider from '@/components/provider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -18,18 +22,21 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <main className='w-screen h-screen'>
-        {children}
-        </main>
-        
+        <Provider>
+          <main className='w-screen h-screen'>
+            {children}
+          </main>
 
-        <Image className='-z-50 bg-cover bg-center'
-          src="/BackGroundWater.jpg"
-          alt="Vercel Logo"
-          fill
-          priority
-        />
+
+          <Image className='-z-50 bg-cover bg-center'
+            src="/BackGroundWater.jpg"
+            alt="Vercel Logo"
+            fill
+            priority
+          />
+        </Provider>
       </body>
+
     </html>
   )
 }

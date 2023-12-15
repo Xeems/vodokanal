@@ -4,11 +4,14 @@ import MeterTable from '@/components/MeterTable'
 import ErrorList from '@/components/ErrorList'
 import DropFiles from '@/components/dropfiles'
 import { Document_data } from '@/utils/globalTypes'
-import Image from 'next/image'
 import { useState } from 'react'
+import { useSession } from 'next-auth/react'
 
 export default function Home() {
+  const {data: session} = useSession()
   const [data, setData] = useState<Document_data | null>(null)
+
+  console.log({session})
 
   const handleData = (data: Document_data) => {
     setData(data)

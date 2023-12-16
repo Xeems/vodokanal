@@ -1,6 +1,6 @@
 import ErorList from '@/components/ErrorList'
 import MeterTable from '@/components/MeterTable'
-import { Document_data, Error_row, Excel_document, Meter_readings } from '@/utils/globalTypes'
+import { Document_data, Error_row, Excel_document, Meter_readings } from '@/types/globalTypes'
 import Image from 'next/image'
 import { useRouter, useSearchParams } from 'next/navigation'
 

@@ -1,3 +1,17 @@
+export type User = {
+    user_id?: number
+    family_name: string;
+    first_name: string;
+    middle_name?: string;
+    login: string;
+    password?: string;
+    roles: UserRole[] 
+}
+
+export enum UserRole {
+    USER = "USER",
+    ADMIN = "ADMIN"
+}
 
 export type Address = {
     address_id?: number
@@ -17,16 +31,16 @@ export type Meter_readings = {
     cold_water: number
 }
 
-export type Excel_document = {
-    excel_document_id: number
-    document_name: string
-    upload_date: Date
+export type ExcelFile = {
+    fileId: number
+    fileName: string
+    uploadDate: string
     meter_readings?: Meter_readings[]
     erors?: Error[]
 }
 
 export type Document_data = {
-    document: Excel_document,
+    document: ExcelFile,
     meter_readings: Meter_readings[],
     errors: Error_row[]
 }
@@ -36,6 +50,6 @@ export type Error_row = {
     address?: Address
     error_content: string
     excel_document_id: number
-    excel_document?: Excel_document
+    excel_document?: ExcelFile
     document_row: number
 }

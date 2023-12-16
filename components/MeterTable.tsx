@@ -1,4 +1,4 @@
-import { Meter_readings } from "@/utils/globalTypes"
+import { Meter_readings } from "@/types/globalTypes"
 import { type } from "os"
 
 // const data = [{

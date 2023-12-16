@@ -1,4 +1,4 @@
-import { Error_row } from "@/utils/globalTypes"
+import { Error_row } from "@/types/globalTypes"
 
 // const data = [{
 //     error_id: 109,

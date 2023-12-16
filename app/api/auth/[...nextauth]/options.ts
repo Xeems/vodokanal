@@ -25,8 +25,9 @@ export const authOptions: NextAuthOptions = {
                         'Content-Type': 'application/json'
                     }
                 })
-                if (response.status == 201)
+                if (response.status == 201) {
                     return response.data
+                }
                 else
                     return null
             }
@@ -34,12 +35,22 @@ export const authOptions: NextAuthOptions = {
     ],
     callbacks: {
         async jwt({ token, user }) {
-            return { ...token, ...user }
+            if (user)
+                token.user = {...user}
+            return token
         },
-        async session({ session, token, user }) {
-            session.user = token
+        // If you want to use the role in client components
+        async session({ session, token }) {
+            if (token) {
+                console.log(token)
+                session.user.id = token.user.userId as string
+                session.user.name = `${token.user.familyName} ${token.user.firstName} ${token.user.middleName}` as string
+                session.user.roles = token.user.roles as string[]
+                session.user.access_token = token.user.access_token as string
+            }
+            console.log(session)
             return session
-        }
+        },
     },
 
     pages: {

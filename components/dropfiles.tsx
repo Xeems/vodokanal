@@ -5,7 +5,7 @@ import UIbutton from './UIbutton'
 import { useState } from 'react'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
-import { Document_data, Excel_document } from '@/utils/globalTypes'
+import { Document_data, Excel_document } from '@/types/globalTypes'
 
 interface ChildProps {
     onDataReceived: (data: Document_data) => void
@@ -36,7 +36,8 @@ export default function DropFiles({ onDataReceived }: ChildProps) {
         const formData = new FormData();
         formData.append('file', selectedFile);
 
-        const response = await axios.post('http://localhost:3000/file-upload/exel', formData,
+        const serverURL = process.env.SERVER_URL
+        const response = await axios.post(`${serverURL}/file/uploadExcel`, formData,
             {
                 headers: {
                     'Content-Type': selectedFile.type,
@@ -56,7 +57,7 @@ export default function DropFiles({ onDataReceived }: ChildProps) {
                 </div>
                 {!selectedFile ?
                     <div className="cursor-pointer group w-full h-48 my-5 transition duration-300 hover:bg-gray-200  bg-white opacity-70 flex justify-center relative border border-solid border-stone-500 backdrop-filter backdrop-blur-lg">
-                        <Image className='group-hover:animate-bounce mb-10 self-center opacity-50 absolute'
+                        <Image className='group-hover:animate-bounce mb-10 self-center absolute'
                             src="/downarrow5.png"
                             quality={100}
                             alt=""

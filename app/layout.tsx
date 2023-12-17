@@ -1,9 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
-import Image from 'next/image'
 import Provider from '@/components/provider'
-import background from '@/public/BackGroundWater.jpg'
 import clsx from 'clsx'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -21,34 +19,10 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<Provider>
-				<body className={clsx(inter.className, 'bg-fixed')} style={{
-								backgroundImage: 'url("/BackGroundWater.jpg")',
-							}}>
-
-					{/* <div className="h-screen">
-						<div className="absolute -z-10 h-full w-full">
-							<Image
-								src="/BackGroundWater.jpg"
-								alt="Background Image"
-								layout="fill"
-								objectFit="cover"
-								priority
-								quality={100}
-							/>
-						</div>
-						{children}
-					</div> */}
-
-					{/* <div className="absolute z-0 w-full h-full bg-transparent">
-						<div
-							className="absolute w-full h-full bg-cover bg-fixed"
-							style={{
-								backgroundImage: 'url("/BackGroundWater.jpg")',
-							}}
-						></div>
-					</div> */}
+				<body className={clsx(inter.className, 'flex h-full w-full bg-fixed items-center align-middle')} style={{
+					backgroundImage: 'url("/BackGroundWater.jpg")',
+				}}>
 					{children}
-
 				</body>
 			</Provider>
 		</html>

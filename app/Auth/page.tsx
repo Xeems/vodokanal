@@ -21,7 +21,7 @@ export default function Auth() {
     }
 
     return (
-        <div className='w-full h-full flex items-center justify-center'>
+        <div className='w-full h-screen flex flex-col my-auto items-center justify-center'>
 
             <form onSubmit={onSubmitLogIn} className="w-[18%] h-fit py-10 px-10 flex flex-col items-center rounded-md backdrop-filter backdrop-blur-md bg-white bg-opacity-90">
                 <div className="text-black font-sans text-4xl flex flex-row justify-center">

@@ -2,25 +2,17 @@
 
 import Image from 'next/image'
 import UIbutton from './UIbutton'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import axios from 'axios'
-import { useRouter } from 'next/navigation'
-import { Document_data, Excel_document } from '@/types/globalTypes'
+import { useSession } from 'next-auth/react'
 
-interface ChildProps {
-    onDataReceived: (data: Document_data) => void
-}
-
-export default function DropFiles({ onDataReceived }: ChildProps) {
-    const [selectedFile, setSelectedFile] = useState<File | null>(null)
-    const [data, setData] = useState<Document_data | null>(null)
-
-    const sendDataToPranet = (data: Document_data) => {
-        onDataReceived(data)
-    }
+export default function DropFiles() {
+    const serverURL = process.env.SERVER_URL
+    const { data: session } = useSession();
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
+    const [responseData, setResponseData] = useState();
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        console.log(event.target.files)
         const files = event.target.files;
         if (files && files.length > 0) {
             setSelectedFile(files[0]);
@@ -29,23 +21,28 @@ export default function DropFiles({ onDataReceived }: ChildProps) {
 
     const handleUpload = async () => {
         if (!selectedFile) {
-            alert("Select a file")
-            return
+            alert("Select a file");
+            return;
         }
 
         const formData = new FormData();
         formData.append('file', selectedFile);
 
-        const serverURL = process.env.SERVER_URL
-        const response = await axios.post(`${serverURL}/file/uploadExcel`, formData,
-            {
-                headers: {
-                    'Content-Type': selectedFile.type,
+        try {
+            const response = await axios.post(`${serverURL}file/uploadExcel`, formData,
+                {
+                    headers: {
+                        'Content-Type': selectedFile.type,
+                        'Authorization': `Bearer ${session?.user.access_token}`
+                    }
                 }
-            })
-        if (response) {
-            const data: Document_data = response.data
-            sendDataToPranet(data)
+            );
+            setResponseData(response.data);
+            if(responseData)
+            {setSelectedFile(null)}
+
+        } catch (error) {
+            console.error('Error uploading file:', error);
         }
     }
 

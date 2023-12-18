@@ -16,6 +16,7 @@ export default function Auth() {
             username: login,
             password: password,
             redirect: true,
+            callbackUrl:"/"
         })
         
     }

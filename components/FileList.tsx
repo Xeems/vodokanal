@@ -24,73 +24,79 @@ export default function FileList() {
     })
 
     const downloadFile = async (fileId: number) => {
-        const fileResponse = await axios.get(`${serverURL}file`, {
+        console.log(fileId)
+        const fileResponse = await axios.get(`${serverURL}file/${fileId}`, {
             headers: {
                 'Authorization': `Bearer ${session?.user.access_token}`
             },
-            data: {
-                "fileId": fileId
-            }
+            responseType: 'blob'
+        }).then((res) => {
+            const url = window.URL.createObjectURL(new Blob([res.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', 'filename.xlsx'); // Установите желаемое имя файла
+            document.body.appendChild(link);
+            link.click();
         })
-        console.log(fileResponse)
+
     }
 
-if (fileList.length == 0)
-    return <></>
+    if (fileList.length == 0)
+        return <></>
 
-return (
-    <div className="w-1/2 rounded-md border border-solid border-zinc-300 backdrop-filter backdrop-blur-3xl bg-white bg-opacity-40">
-        <table className="w-full border-collapse">
-            <thead >
-                <tr>
-                    <th className="px-6 py-2">Id</th>
-                    <th className="px-6 py-2">Название</th>
-                    <th className="px-6 py-2">Дата загрузки</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                {fileList.map((file: ExcelFile) => (
-                    <tr key={file.fileId} className="text-lg h-16 hover:bg-gray-300 hover:bg-opacity-40 border-t border-solid border-zinc-300">
-
-                        <td className="px-6 py-2">{file.fileId}</td>
-
-                        <td className="px-auto py-2">
-                            <div className="flex flex-row">
-                                <Image className='self-center'
-                                    src="/exel.png"
-                                    quality={100}
-                                    alt=""
-                                    width={0}
-                                    height={0}
-                                    sizes="100vw"
-                                    style={{ width: 'auto', height: '30px' }}
-                                />
-                                {file.fileName}
-                            </div>
-                        </td>
-
-                        <td className="px-6 py-2">{format(parseISO(file.uploadDate), 'dd.MM.yyyy HH:mm:ss')}</td>
-
-                        <td>
-                            <button onClick={() => {
-                                downloadFile(file.fileId)
-                            }}>
-                                <Image className='self-center'
-                                    src="/download.png"
-                                    quality={100}
-                                    alt=""
-                                    width={0}
-                                    height={0}
-                                    sizes="100vw"
-                                    style={{ width: 'auto', height: '27px' }} />
-                            </button>
-                        </td>
-
+    return (
+        <div className="w-1/2 rounded-md border border-solid border-zinc-300 backdrop-filter backdrop-blur-3xl bg-white bg-opacity-40">
+            <table className="w-full border-collapse">
+                <thead >
+                    <tr>
+                        <th className="px-6 py-2">Id</th>
+                        <th className="px-6 py-2">Название</th>
+                        <th className="px-6 py-2">Дата загрузки</th>
                     </tr>
-                ))}
-            </tbody>
-        </table>
-    </div>
-)
+                </thead>
+
+                <tbody>
+                    {fileList.map((file: ExcelFile) => (
+                        <tr key={file.fileId} className="text-lg h-16 hover:bg-gray-300 hover:bg-opacity-40 border-t border-solid border-zinc-300">
+
+                            <td className="px-6 py-2">{file.fileId}</td>
+
+                            <td className="px-auto py-2">
+                                <div className="flex flex-row">
+                                    <Image className='self-center'
+                                        src="/exel.png"
+                                        quality={100}
+                                        alt=""
+                                        width={0}
+                                        height={0}
+                                        sizes="100vw"
+                                        style={{ width: 'auto', height: '30px' }}
+                                    />
+                                    {file.fileName}
+                                </div>
+                            </td>
+
+                            <td className="px-6 py-2">{format(parseISO(file.uploadDate), 'dd.MM.yyyy HH:mm:ss')}</td>
+
+                            <td>
+                                <button onClick={() => {
+                                    downloadFile(file.fileId)
+                                }}>
+                                    <Image className='self-center'
+                                        src="/download.png"
+                                        quality={100}
+                                        alt=""
+                                        width={0}
+                                        height={0}
+                                        sizes="100vw"
+                                        style={{ width: 'auto', height: '27px' }} />
+                                </button>
+                            </td>
+
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
+    )
 }

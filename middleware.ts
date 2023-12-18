@@ -5,13 +5,6 @@ export default withAuth(
     // `withAuth` augments your `Request` with the user's token.
     function middleware(request: NextRequestWithAuth) {
 
-        if (request.nextUrl.pathname.startsWith("/")
-            && request.nextauth.token?.user.role?.includes("USER")) {
-            return NextResponse.rewrite(
-                new URL("/", request.url)
-            )
-        }
-
         if (request.nextUrl.pathname.startsWith("/Admin")
             && request.nextauth.token?.user.roles?.includes("ADMIN")) {
             return NextResponse.rewrite(

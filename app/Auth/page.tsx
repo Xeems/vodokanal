@@ -1,4 +1,4 @@
-'use client'
+
 
 import UIbutton from '@/components/UIbutton'
 import UIinput from '@/components/UIinput'
@@ -6,17 +6,16 @@ import { useState } from 'react';
 import { signIn } from 'next-auth/react'
 
 export default function Auth() {
-    const [login, setLogin] = useState<string>('')
-    const [password, setPassword] = useState<string>('')
+    // const [login, setLogin] = useState<string>('')
+    // const [password, setPassword] = useState<string>('')
 
     async function onSubmitLogIn(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        console.log(login, password)
         const result = await signIn('credentials', {
-            username: login,
-            password: password,
+            username: '1',
+            password: '1',
             redirect: true,
-            callbackUrl:"/"
+            callbackUrl:"/main"
         })
         
     }

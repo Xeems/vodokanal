@@ -8,12 +8,13 @@ import Image from "next/image"
 import { parseISO, format } from 'date-fns';
 import { useSession } from "next-auth/react"
 import { useEffect, useState } from "react"
+import { error } from "console"
 
 export default function FileList() {
     const { data: session } = useSession()
     const [fileList, setFileList] = useState<ExcelFile[]>([])
     const serverURL = process.env.SERVER_URL
-
+    try{
     useEffect(() => {
         axios.get(`${serverURL}file/userFiles`, {
             headers: {
@@ -22,10 +23,13 @@ export default function FileList() {
         }).then((res) => setFileList(res.data))
 
     })
-
-    const downloadFile = async (fileId: number) => {
+    }
+    catch(Error){
+        console.log(Error)
+    }
+    const downloadFile = (fileId: number) => {
         console.log(fileId)
-        const fileResponse = await axios.get(`${serverURL}file/${fileId}`, {
+        axios.get(`${serverURL}file/${fileId}`, {
             headers: {
                 'Authorization': `Bearer ${session?.user.access_token}`
             },

@@ -28,13 +28,12 @@ export default function Auth() {
                     <p className=''>Вход</p>
                 </div>
                 <UIinput placeholder="Логин" header='Логин'
-                    value={login}
-                    onChange={(event) => setLogin(event.target.value)} />
+                    
+                     />
 
                 <UIinput placeholder="Пароль" header='Пароль'
                     type='password'
-                    value={password}
-                    onChange={(event) => setPassword(event.target.value)} />
+                    />
 
                 <UIbutton className='mt-4'>Вход</UIbutton>
             </form>

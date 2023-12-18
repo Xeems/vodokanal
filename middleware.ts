@@ -19,7 +19,7 @@ export default withAuth(
     }
 )
 
-// export const config = {matcher:[
-//     "/",
-//     "/Admin"
-// ]}
+export const config = {matcher:[
+    "/",
+    "/Admin"
+]}

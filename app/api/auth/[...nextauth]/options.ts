@@ -25,7 +25,7 @@ export const authOptions: NextAuthOptions = {
                         'Content-Type': 'application/json'
                     }
                 })
-                if (response.status == 201) {
+                if (response.data) {
                     return response.data
                 }
                 else

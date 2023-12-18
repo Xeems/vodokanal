@@ -6,8 +6,7 @@ import { useSession } from 'next-auth/react'
 
 export default function Admin() {
 const {data: session} = useSession()
-    if(session?.user?.role == "ADMIN")
-
+    if(session?.user?.roles.includes("ADMIN"))
 
     return (
         <div className=''>
